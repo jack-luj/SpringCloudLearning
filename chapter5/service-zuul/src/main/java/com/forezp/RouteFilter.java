@@ -7,16 +7,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by forezp on 2017/4/8.
  */
 @Component
-public class MyFilter extends ZuulFilter{
+public class RouteFilter extends ZuulFilter{
 
-    private static Logger log = LoggerFactory.getLogger(MyFilter.class);
+    private static Logger log = LoggerFactory.getLogger(RouteFilter.class);
     @Override
     public String filterType() {
-        return "pre";
+        return "route";
     }
 
     @Override
@@ -33,19 +35,9 @@ public class MyFilter extends ZuulFilter{
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        log.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
-        Object accessToken = request.getParameter("token");
-        if(accessToken == null) {
-            log.warn("token is empty");
-            ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(401);
-            try {
-                ctx.getResponse().getWriter().write("token is empty");
-            }catch (Exception e){}
-
-            return null;
-        }
-        log.info("ok");
+        HttpServletResponse response = ctx.getResponse();
+        ctx.addZuulRequestHeader("starttimestamp",String.valueOf(System.currentTimeMillis()));
+       // log.info(String.format("client: %s , request: %s , routeUrl: %s", request.getRemoteAddr(),request.getRequestURL(),ctx.getRouteHost()));
         return null;
     }
 }
