@@ -1,16 +1,13 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>Spring Cloud demo</title>
 </head>
-<body>
-<ul>
-    <li><a href="http://localhost:8761/" target="_blank">Eureka 自带仪表板</a></li>
-    <li><a href="http://localhost:8769/api-a/hi?name=forezp&token=22" target="_blank">Zuul路由请求到ribbon-service</a></li>
-    <li><a href="http://localhost:8769/api-c/hi?name=forezp&token=22" target="_blank">Zuul路由请求到hi-service</a></li>
-    <li><a href="http://localhost:8764/hystrix" target="_blank">hystrix断路器监控</a></li>
-</ul>
-</body>
+<frameset cols="20%,80%">
+
+  <frame src="menu.html">
+  <frame src="http://localhost:8761/" name="showframe">
+
+</frameset>
+
 </html>
